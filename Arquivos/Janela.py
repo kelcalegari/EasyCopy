@@ -80,7 +80,7 @@ class Janela():
 
         contDentro = tk.Frame(container, width=self.tam_cont,
                              height=self.tam_cont, bg=self.cor_fundo_container)
-        contDentro.place(x=5, y=5, width=self.tam_cont-10, height=self.tam_cont-10)
+        contDentro.place(x=10, y=10, width=self.tam_cont-20, height=self.tam_cont-20)
 
         label = tk.Label(
             contDentro, text=texto, fg=self.cor_texto, bg=self.cor_fundo_container, wraplength= self.tam_cont - 15, justify= tk.LEFT,anchor=tk.NW )
