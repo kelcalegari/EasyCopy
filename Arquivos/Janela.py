@@ -47,21 +47,25 @@ class Janela():
 
 
     def criar_conteiner(self, x, y, texto):
+        
 
-        wrapper = textwrap.TextWrapper(width=25,max_lines=9,break_long_words= True)
+        wrapper = textwrap.TextWrapper(width=22,max_lines=9)
         wrapped_text = wrapper.wrap(texto)
-        truncated_text = '\n'.join(wrapped_text)
+        truncated_text = '\n '.join(wrapped_text)
+        
         def copiar_texto(event):
             def aplicarEfeito():
         
                 def resetar_cores():
                     try:
-                        container.configure(bg=self.cor_fundo_container)  
+                        container.configure(bg=self.cor_fundo_container)
+                        contDentro.configure(bg=self.cor_fundo_container)  
                         label.configure(bg=self.cor_fundo_container)
                     except tk.TclError:
                         pass
                     
 
+                contDentro.configure(bg=self.cor_foco)
                 container.configure(bg=self.cor_foco)
                 label.configure(bg=self.cor_foco)  
                 self.janela.after(500, lambda: resetar_cores())  
@@ -74,11 +78,15 @@ class Janela():
                              height=self.tam_cont, bg=self.cor_fundo_container)
         container.place(x=x, y=y, width=self.tam_cont, height=self.tam_cont)
 
+        contDentro = tk.Frame(container, width=self.tam_cont,
+                             height=self.tam_cont, bg=self.cor_fundo_container)
+        contDentro.place(x=5, y=5, width=self.tam_cont-10, height=self.tam_cont-10)
+
         label = tk.Label(
-            container, text=truncated_text, fg=self.cor_texto, bg=self.cor_fundo_container,
-            padx=10, pady=10, justify=tk.LEFT)
+            contDentro, text=texto, fg=self.cor_texto, bg=self.cor_fundo_container, wraplength= self.tam_cont - 15, justify= tk.LEFT,anchor=tk.NW )
         label.pack(expand=True, anchor=tk.NW)
         label.bind("<Button-1>", copiar_texto)
+        contDentro.bind("<Button-1>", copiar_texto)
         container.bind("<Button-1>", copiar_texto)
 
     def criar_linhas(self):
@@ -99,6 +107,7 @@ class Janela():
     def atualizarDados(self):
         if(len(self.itensHistory)!= 0):
             if self.itensHistory[-1] != self.lastItem:
+                self.lastItem = self.itensHistory[-1]
                 self.reconstruir_linhas()
         self.janela.after(1000, self.atualizarDados)
 
