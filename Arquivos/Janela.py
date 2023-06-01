@@ -83,7 +83,7 @@ class Janela():
         contDentro.place(x=10, y=10, width=self.tam_cont-20, height=self.tam_cont-20)
 
         label = tk.Label(
-            contDentro, text=texto, fg=self.cor_texto, bg=self.cor_fundo_container, wraplength= self.tam_cont - 15, justify= tk.LEFT,anchor=tk.NW )
+            contDentro, text=texto, fg=self.cor_texto, bg=self.cor_fundo_container, wraplength= self.tam_cont - 20, justify= tk.LEFT,anchor=tk.NW )
         label.pack(expand=True, anchor=tk.NW)
         label.bind("<Button-1>", copiar_texto)
         contDentro.bind("<Button-1>", copiar_texto)
