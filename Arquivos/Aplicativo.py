@@ -25,7 +25,7 @@ class Aplicativo:
                 elif not iconTaskThread.is_alive():
                     return
 
-                time.sleep(30)
+                time.sleep(15)
 
         except Exception as erro:
             self.logs.record(msg=erro, colorize=True)

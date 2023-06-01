@@ -8,8 +8,8 @@ from Arquivos.Logger import Logs
 class main:
     LOG_FILE = "Arquivos/Logs/Log.log"
     nome_da_pasta = "Arquivos"
-    urlIcone = "https://raw.githubusercontent.com/kelcalegari/AreaTransferencia/edc5918e4212a06724f49d47dc0703b7bea96b98/Arquivos/icone.ico?token=GHSAT0AAAAAACAYFV5TQNP7SWXGZ4H5UQ26ZDSLEEA"
-    urlIconePreto = "https://raw.githubusercontent.com/kelcalegari/AreaTransferencia/edc5918e4212a06724f49d47dc0703b7bea96b98/Arquivos/iconePreto.ico?token=GHSAT0AAAAAACAYFV5TECYSK67C4BGRR7GSZDSLEYA"
+    urlIcone = "https://raw.githubusercontent.com/kelcalegari/EasyCopy/master/Arquivos/icone.ico"
+    urlIconePreto = "https://raw.githubusercontent.com/kelcalegari/EasyCopy/master/Arquivos/iconePreto.ico"
     nomeIcone = nome_da_pasta + "/icone.ico"
     nomeIconePreto = nome_da_pasta + "/iconePreto.ico"
 

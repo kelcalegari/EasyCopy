@@ -48,9 +48,9 @@ class Janela():
 
     def criar_conteiner(self, x, y, texto):
 
-        wrapper = textwrap.TextWrapper(width=25)
+        wrapper = textwrap.TextWrapper(width=25,max_lines=9,break_long_words= True)
         wrapped_text = wrapper.wrap(texto)
-        truncated_text = '\n'.join(wrapped_text[:9])
+        truncated_text = '\n'.join(wrapped_text)
         def copiar_texto(event):
             def aplicarEfeito():
         
