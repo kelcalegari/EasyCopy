@@ -1,3 +1,4 @@
+from datetime import datetime
 from threading import Thread
 import time
 import pyperclip
@@ -5,6 +6,7 @@ import pystray
 from pystray import MenuItem as item
 from PIL import Image
 from Arquivos.Janela import Janela
+import easygui
 
 
 class Aplicativo:
@@ -82,16 +84,33 @@ class Aplicativo:
                         self.itensHistory.append(itemAtual)
                         if len(self.itensHistory) > 50:
                             self.itensHistory.pop(0)
-
                     time.sleep(1)
 
             except Exception as error:
+
+                hora_atual = datetime.now().time()
+                print("erro" + str(hora_atual.minute))
                 self.logs.record(
                     msg=f"Erro Exception getCopiedList = {error}", colorize=True)
                 quantErros += 1
+                pyperclip.copy("")
+                time.sleep(10)
+                if quantErros > 1:
+                    diferenca_minutos = (datetime.combine(
+                        datetime.min, hora_atual) - datetime.combine(datetime.min, ultimoErro)).total_seconds() / 60
+                    if diferenca_minutos > 1:
+                        quantErros = 0
+                    else:
+                        ultimoErro = hora_atual
+                else:
+                    ultimoErro = hora_atual
+
                 if quantErros > 10:
                     self.logs.record(
                         msg=f"Excedeu 10 erros no getCopiedList", colorize=True)
+                    easygui.msgbox(
+                        f"Erro EasyCopy parou de funcionar, inicie ele novamente! ")
+
                     break
 
                 continue
