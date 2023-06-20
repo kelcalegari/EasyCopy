@@ -1,5 +1,4 @@
 import math
-import textwrap
 import pyperclip
 import tkinter as tk
 
@@ -13,9 +12,9 @@ class Janela():
     cor_texto = 'white'  # Cor do texto em branco
     cor_foco = '#252525'
     lastItem = ""
-    linhaS=0
+    linhaS = 0
 
-    def __init__(self, itensHistory,logs):
+    def __init__(self, itensHistory, logs):
         self.logs = logs
         try:
             self.itensHistory = itensHistory
@@ -30,12 +29,11 @@ class Janela():
             self.iniciar_loop()
         except Exception as error:
             self.logs.record(msg=f"Erro Janela = {error}", colorize=True)
-            
 
-    def scroll_event(self,event):
+    def scroll_event(self, event):
         temp = self.linhaS - int(event.delta)
         nMaxLinha = ((temp/120)) < math.ceil(len(self.itensHistory)/4)
-        if ((len(self.itensHistory)> 12) and (temp>=0) and nMaxLinha):
+        if ((len(self.itensHistory) > 12) and (temp >= 0) and nMaxLinha):
             self.linhaS = temp
             self.reconstruir_linhas()
 
@@ -45,31 +43,21 @@ class Janela():
         except Exception as error:
             self.logs.record(msg=f"Erro Janela.init = {error}", colorize=True)
 
-
     def criar_conteiner(self, x, y, texto):
-        
-
-        wrapper = textwrap.TextWrapper(width=22,max_lines=9)
-        wrapped_text = wrapper.wrap(texto)
-        truncated_text = '\n '.join(wrapped_text)
-        
         def copiar_texto(event):
             def aplicarEfeito():
-        
                 def resetar_cores():
                     try:
                         container.configure(bg=self.cor_fundo_container)
-                        contDentro.configure(bg=self.cor_fundo_container)  
+                        contDentro.configure(bg=self.cor_fundo_container)
                         label.configure(bg=self.cor_fundo_container)
                     except tk.TclError:
                         pass
-                    
 
                 contDentro.configure(bg=self.cor_foco)
                 container.configure(bg=self.cor_foco)
-                label.configure(bg=self.cor_foco)  
-                self.janela.after(500, lambda: resetar_cores())  
-                
+                label.configure(bg=self.cor_foco)
+                self.janela.after(500, lambda: resetar_cores())
 
             pyperclip.copy(texto)
             aplicarEfeito()
@@ -79,12 +67,14 @@ class Janela():
         container.place(x=x, y=y, width=self.tam_cont, height=self.tam_cont)
 
         contDentro = tk.Frame(container, width=self.tam_cont,
-                             height=self.tam_cont, bg=self.cor_fundo_container)
-        contDentro.place(x=10, y=10, width=self.tam_cont-20, height=self.tam_cont-20)
+                              height=self.tam_cont, bg=self.cor_fundo_container)
+        contDentro.place(x=10, y=10, width=self.tam_cont -
+                         20, height=self.tam_cont-20)
 
         label = tk.Label(
-            contDentro, text=texto, fg=self.cor_texto, bg=self.cor_fundo_container, wraplength= self.tam_cont - 20, justify= tk.LEFT,anchor=tk.NW )
+            contDentro, text=texto, fg=self.cor_texto, bg=self.cor_fundo_container, wraplength=self.tam_cont - 20, justify=tk.LEFT, anchor=tk.NW)
         label.pack(expand=True, anchor=tk.NW)
+
         label.bind("<Button-1>", copiar_texto)
         contDentro.bind("<Button-1>", copiar_texto)
         container.bind("<Button-1>", copiar_texto)
@@ -101,14 +91,16 @@ class Janela():
                     i -= 1
                     if ((nCopias == 0) or (i == -13 - calcLinha)):
                         break
+
                 if ((nCopias == 0) or (i == -13 - calcLinha)):
                     break
 
     def atualizarDados(self):
-        if(len(self.itensHistory)!= 0):
+        if (len(self.itensHistory) != 0):
             if self.itensHistory[-1] != self.lastItem:
                 self.lastItem = self.itensHistory[-1]
                 self.reconstruir_linhas()
+                
         self.janela.after(1000, self.atualizarDados)
 
     def reconstruir_linhas(self):
@@ -117,8 +109,8 @@ class Janela():
                 widget.destroy()
             self.init()
         except Exception as error:
-            self.logs.record(msg=f"Erro Janela.reconstruir_linhas = {error}", colorize=True)
-
+            self.logs.record(
+                msg=f"Erro Janela.reconstruir_linhas = {error}", colorize=True)
 
     def iniciar_loop(self):
         self.janela.after(1000, self.atualizarDados)

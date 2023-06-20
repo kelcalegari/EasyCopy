@@ -21,11 +21,10 @@ class Colors:
 
 
 class Logs(Colors):
-
     FILENAME = "mylogs.log"
     DATE_FORMAT = "%d/%m/%Y %H:%M:%S"
 
-    def __init__(self, filename=FILENAME, datefmt=DATE_FORMAT, logLevel = "info"):
+    def __init__(self, filename=FILENAME, datefmt=DATE_FORMAT, logLevel="info"):
         self.filename = filename
         self.date_format = datefmt
         self.formated = "%(levelname)s:[%(asctime)s]: %(message)s"
@@ -41,17 +40,7 @@ class Logs(Colors):
             "critical": logging.critical
         }
 
-    def record(self, msg, *args, exc_info=True, type="exception", colorize=False,**kwargs):
-        """
-        It takes a message, and a type of message, and logs it to a file
-        
-        :param msg: The message to log
-        :param exc_info: If True, exception information is added to the logging message, defaults to
-        True (optional)
-        :param type: The type of log you want to record, defaults to exception (optional)
-        :param colorize: If True, the log messages will be colored, defaults to False (optional)
-        :return: The return value of the method is the return value of the method called.
-        """
+    def record(self, msg, *args, exc_info=True, type="exception", colorize=False, **kwargs):
         for item in self.levels.keys():
             if item == type:
                 if not colorize:
@@ -82,7 +71,8 @@ class Logs(Colors):
         raise ValueError(
             f'Error implementing the method "{self.record.__name__}" in class Logs.'
         )
-    def whichLogLevel(self,logLevel):   
+
+    def whichLogLevel(self, logLevel):
         if logLevel == "warning":
             return logging.WARN
         if logLevel == "error" or logLevel == "exception":
@@ -94,4 +84,3 @@ class Logs(Colors):
         if logLevel == "critical":
             return logging.CRITICAL
         return logging.INFO
-            

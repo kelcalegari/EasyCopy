@@ -4,8 +4,6 @@ import pyperclip
 import pystray
 from pystray import MenuItem as item
 from PIL import Image
-
-
 from Arquivos.Janela import Janela
 
 
@@ -18,7 +16,6 @@ class Aplicativo:
         try:
             lookThread = self.initLookCopy()
             iconTaskThread = self.initIconTask()
-
             while True:
                 if not lookThread.is_alive():
                     raise RuntimeError("Falha no lookThread")
@@ -26,7 +23,6 @@ class Aplicativo:
                     return
 
                 time.sleep(15)
-
         except Exception as erro:
             self.logs.record(msg=erro, colorize=True)
 
@@ -42,7 +38,6 @@ class Aplicativo:
         return thread
 
     def iconTask(self):
-
         image = Image.open("Arquivos/icone.ico")
         menu = (
             item('Sair', self.sair),
@@ -50,9 +45,7 @@ class Aplicativo:
         )
         icon = pystray.Icon("area_de_transferencia", image,
                             "Área de transferência", menu)
-
         icon.run()
-
 
     def sair(self, icon, item):
         icon.stop()
@@ -68,7 +61,6 @@ class Aplicativo:
                 msg=f"Erro RuntimeError thread abrirJanela = {error}", colorize=True)
 
     def initLookCopy(self):
-        
         try:
             thread = Thread(target=self.getCopiedList)
             # Define o thread como daemon para finalizar junto com o programa principal
@@ -92,6 +84,7 @@ class Aplicativo:
                             self.itensHistory.pop(0)
 
                     time.sleep(1)
+
             except Exception as error:
                 self.logs.record(
                     msg=f"Erro Exception getCopiedList = {error}", colorize=True)
@@ -100,4 +93,5 @@ class Aplicativo:
                     self.logs.record(
                         msg=f"Excedeu 10 erros no getCopiedList", colorize=True)
                     break
+
                 continue
