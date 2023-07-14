@@ -74,16 +74,24 @@ class Aplicativo:
         return thread
 
     def getCopiedList(self):
+        itemAnterior = ""
         quantErros = 0
         while True:
             try:
                 while True:
-                    # Verifica se algo novo foi copiado
+                    
                     itemAtual = pyperclip.paste()
-                    if ((itemAtual not in self.itensHistory) and (len(itemAtual) > 0)):
-                        self.itensHistory.append(itemAtual)
-                        if len(self.itensHistory) > 50:
-                            self.itensHistory.pop(0)
+                    if (itemAnterior != itemAtual):
+                        if ((itemAtual not in self.itensHistory) and (len(itemAtual) > 0)):
+                            self.itensHistory.append(itemAtual)
+                            itemAnterior = itemAtual
+                            if len(self.itensHistory) > 50:
+                                self.itensHistory.pop(0)
+                        elif (len(itemAtual) > 0):
+                            self.itensHistory.remove(itemAtual)
+                            self.itensHistory.append(itemAtual)
+                            itemAnterior = itemAtual
+                        
                     time.sleep(1)
 
             except Exception as error:
